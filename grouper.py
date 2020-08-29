@@ -3,7 +3,7 @@ import os
 import sys
 from argparse import ArgumentParser
 from datetime import datetime
-from os.path import isdir, join
+from os.path import isdir, join, abspath
 
 
 def main(argv):
@@ -22,9 +22,10 @@ def main(argv):
             mtime = os.stat(fpath).st_mtime - offset_hours
             mtime_date = datetime.fromtimestamp(mtime)
             day_folder = mtime_date.strftime('%Y%m%d')
+            day_folder_path = join(abspath(path), day_folder)
             # フォルダを作成して分類
-            os.makedirs(day_folder, exist_ok=True)
-            dst_path = join(day_folder, filename)
+            os.makedirs(day_folder_path, exist_ok=True)
+            dst_path = join(day_folder_path, filename)
             print(dst_path)
             os.rename(fpath, dst_path)
 
