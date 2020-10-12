@@ -3,7 +3,7 @@ import os
 import sys
 from argparse import ArgumentParser
 from datetime import datetime
-from os.path import isdir, join, abspath
+from os.path import isdir, join, abspath, splitext
 
 
 def main(argv):
@@ -16,8 +16,10 @@ def main(argv):
     for path in opt.paths:
         if not isdir(path):
             continue
-        print(path)
         for filename in os.listdir(path):
+            _, ext = splitext(filename)
+            if ext[1:] not in ['jpg', 'jpeg', 'png', 'gif', 'tiff', 'bmp']:
+                continue
             fpath = join(path, filename)
             mtime = os.stat(fpath).st_mtime - offset_hours
             mtime_date = datetime.fromtimestamp(mtime)
