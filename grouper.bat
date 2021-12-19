@@ -1,3 +1,3 @@
 cd /D %~dp0
 python grouper.py %1
-pause
+explorer %1
